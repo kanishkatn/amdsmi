@@ -194,6 +194,7 @@ amdsmi_status_t AMDSmiSystem::populate_amd_gpu_devices() {
     // The init of libdrm depends on rsmi_init
     // libdrm is optional, ignore the error even if init fail.
     amdsmi_status_t amd_smi_status = drm_.init();
+    printf("drm init status: %d\n", amd_smi_status);
 
     uint32_t device_count = 0;
     ret = rsmi_num_monitor_devices(&device_count);
