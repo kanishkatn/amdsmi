@@ -37,7 +37,6 @@ set(SRC_LIST
     "${SRC_DIR}/amd_smi_utils.cc"
     "${SRC_DIR}/amd_smi_uuid.cc"
     "${SRC_DIR}/fdinfo.cc"
-    "${SRC_DIR}/amd_smi_wrapper.cc"
     "${CMN_SRC_LIST}")
 set(INC_LIST
     "${INC_DIR}/amdsmi.h"
