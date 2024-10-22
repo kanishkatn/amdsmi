@@ -1,8 +1,8 @@
-package main
+package _go
 
 /*
-#cgo CXXFLAGS: -I./src/amd_smi -I./include/amd_smi -DENABLE_DEBUG_LEVEL=2 -std=c++11
-#cgo CFLAGS: -I./src/amd_smi -I./include/amd_smi -DENABLE_DEBUG_LEVEL=2
+#cgo CXXFLAGS: -Iinclude -std=c++11
+#cgo CFLAGS: -Iinclude
 #cgo LDFLAGS: -ldl
 
 #include <dlfcn.h>
