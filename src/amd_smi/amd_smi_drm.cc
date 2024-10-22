@@ -134,7 +134,6 @@ amdsmi_status_t AMDSmiDrm::init() {
     auto devices = smi.devices();
 
     bool has_valid_fds = false;
-    printf("devices.size() = %d\n", devices.size());
     for (uint32_t i=0; i < devices.size(); i++) {
         auto rocm_smi_device = devices[i];
         std::string render_file_name;
@@ -144,7 +143,6 @@ amdsmi_status_t AMDSmiDrm::init() {
         const std::string renderD_folder = "/sys/class/drm/card"
                     + std::to_string(rocm_smi_device->index()) + "/../";
 
-        printf("renderD_folder = %s\n", renderD_folder.c_str());
         // looking for /sys/class/drm/card0/../renderD*
         std::string render_name = find_file_in_folder(renderD_folder, regex);
         fd = -1;
@@ -152,8 +150,6 @@ amdsmi_status_t AMDSmiDrm::init() {
         if (render_name != "") {
             fd = open(name.c_str(), O_RDWR | O_CLOEXEC);
         }
-        printf("name = %s\n", name.c_str());
-        printf("fd = %d\n", fd);
 
         amdsmi_bdf_t bdf;
         if (fd >= 0) {
@@ -174,7 +170,6 @@ amdsmi_status_t AMDSmiDrm::init() {
         drm_paths_.push_back(render_name);
         // even if fail, still add to prevent mismatch the index
         if (fd < 0) {
-            printf("fd < 0; continue;\n");
             drm_bdfs_.push_back(bdf);
             continue;
         }
@@ -323,21 +318,8 @@ amdsmi_status_t AMDSmiDrm::amdgpu_query_vbios(int fd, void *info) {
 
 
 amdsmi_status_t AMDSmiDrm::get_drm_fd_by_index(uint32_t gpu_index, uint32_t *fd_info) const {
-    if (gpu_index + 1 > drm_fds_.size()) {
-        printf("gpu_index = %d, drm_fds_.size() = %d\n", gpu_index, drm_fds_.size());
-        return AMDSMI_STATUS_NOT_SUPPORTED;
-    }
-
-
-    // print drm_fds
-    for (int i = 0; i < drm_fds_.size(); i++) {
-        printf("drm_fds_[%d] = %d\n", i, drm_fds_[i]);
-    }
-
-    if (drm_fds_[gpu_index] < 0 ) {
-        printf("AMDSMI_STATUS_NOT_SUPPORTED gpu_index = %d, drm_fds_[gpu_index] = %d\n", gpu_index, drm_fds_[gpu_index]);
-        return AMDSMI_STATUS_NOT_SUPPORTED;
-    }
+    if (gpu_index + 1 > drm_fds_.size()) return AMDSMI_STATUS_NOT_SUPPORTED;
+    if (drm_fds_[gpu_index] < 0 ) return AMDSMI_STATUS_NOT_SUPPORTED;
     *fd_info = drm_fds_[gpu_index];
     return AMDSMI_STATUS_SUCCESS;
 }

@@ -573,7 +573,6 @@ amdsmi_status_t amdsmi_get_gpu_vram_usage(amdsmi_processor_handle processor_hand
         return ret;
     }
 
-    printf("processor type: %d\n", device->get_processor_type());
     if (device->get_processor_type() != AMDSMI_PROCESSOR_TYPE_AMD_GPU) {
         return AMDSMI_STATUS_NOT_SUPPORTED;
     }
@@ -587,7 +586,6 @@ amdsmi_status_t amdsmi_get_gpu_vram_usage(amdsmi_processor_handle processor_hand
     struct drm_amdgpu_info_vram_gtt gtt;
     uint64_t vram_used = 0;
 
-    printf("get vram info\n");
     r = gpu_device->amdgpu_query_info(AMDGPU_INFO_VRAM_GTT,
                 sizeof(struct drm_amdgpu_memory_info), &gtt);
     if (r != AMDSMI_STATUS_SUCCESS)  return r;
@@ -595,7 +593,6 @@ amdsmi_status_t amdsmi_get_gpu_vram_usage(amdsmi_processor_handle processor_hand
     vram_info->vram_total = static_cast<uint32_t>(
         gtt.vram_size / (1024 * 1024));
 
-    printf("get vram usage\n");
     r = gpu_device->amdgpu_query_info(AMDGPU_INFO_VRAM_USAGE,
                 sizeof(vram_used), &vram_used);
     if (r != AMDSMI_STATUS_SUCCESS) {

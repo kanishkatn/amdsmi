@@ -5937,10 +5937,6 @@ amdsmi_status_t amdsmi_get_cpu_model(uint32_t *cpu_model);
 amdsmi_status_t amdsmi_get_esmi_err_msg(amdsmi_status_t status, const char **status_string);
 #endif
 /** @} auxiquer */
-
-// Wrapper for Cgo
-amdsmi_status_t c_amdsmi_init(uint64_t flags);
-amdsmi_status_t c_amdsmi_shut_down();
 #ifdef __cplusplus
 }
 #endif  // __cplusplus
