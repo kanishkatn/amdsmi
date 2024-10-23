@@ -223,12 +223,12 @@ type VRAM struct {
 }
 
 // Init initializes the AMD SMI library with GPUs.
-func Init() bool {
+func Init() (bool, error) {
 	if C.load_amdsmi_library() == 0 {
-		return false
+		return false, fmt.Errorf("failed to load AMD SMI library")
 	}
 
-	return C.call_amdsmi_init(C.AMDSMI_INIT_AMD_GPUS) == C.AMDSMI_STATUS_SUCCESS
+	return C.call_amdsmi_init(C.AMDSMI_INIT_AMD_GPUS) == C.AMDSMI_STATUS_SUCCESS, nil
 }
 
 // Shutdown shuts down the AMD SMI library.
